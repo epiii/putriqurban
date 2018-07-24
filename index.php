@@ -396,21 +396,23 @@ for ($i=1; $i<=$pages ; $i++){
 $sqlHewan = 'SELECT * FROM hewan ';
 if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
 	$sqlHewan.=' WHERE ';
-	$sqlHewan.=' kategori= '.(isset($_GET['kategori'])&& trim($_GET['kategori'],' ')!=''?' "'.strtoupper(trim($_GET['kategori'],' ')).'" ':'');
-	if(isset($_GET['lunas'])){
-		$sqlHewan.=' AND lunas ';
-		$sqlHewan.= trim($_GET['lunas'],' ')==0?' is NULL ':'="lunas" ';
+	if(isset($_GET['kategori']) && trim($_GET['kategori'],' ')!=''){
+		$sqlHewan.=' kategori ="'.strtoupper(trim($_GET['kategori'],' ')).'" AND ';
 	}
-	// $sqlHewan.=' AND lunas '.(isset($_GET['lunas'])&& trim($_GET['lunas'],' ')!=''?(strtolower(trim($_GET['lunas'],' '))==0?' is NULL ':'="lunas" '):'');
+	if(isset($_GET['lunas'])){
+		$sqlHewan.=' lunas ';
+			$sqlHewan.= trim($_GET['lunas'],' ')==0?' is NULL ':'="lunas" ';
+		$sqlHewan.=' AND ';
+	}
 	if ( isset($_GET['harga_lama']) ){
 		$hrg=trim($_GET['harga_lama'],' ');
 		$hrg=explode(';',$hrg);
-		$sqlHewan.=' AND  harga_lama between '.$hrg[0].' and '.$hrg[1];
+		$sqlHewan.='  harga_lama between '.$hrg[0].' and '.$hrg[1].' AND ';
 	}
 	if ( isset($_GET['berat']) ){
 		$hrg=trim($_GET['berat'],' ');
 		$hrg=explode(';',$hrg);
-		$sqlHewan.=' AND  berat between '.$hrg[0].' and '.$hrg[1];
+		$sqlHewan.='   berat between '.$hrg[0].' and '.$hrg[1];
 	}
 }
 // $sqlHewan.=isset($_GET['berat'])&& trim($_GET['berat'],' ')!=''?'WHERE berat="'.trim($_GET['berat'],' ').'" ':'';
