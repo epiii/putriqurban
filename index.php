@@ -418,8 +418,8 @@ if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
 	}
 
 // sorting
-	$sqlHewan.=' ORDER BY ';
 	if(isset($_GET['sorting']) && trim($_GET['sorting'],' ')!='' ){
+		$sqlHewan.=' ORDER BY ';
 		if ($_GET['sorting']=='minHarga'){
 			$sqlHewan.=' harga_lama ASC ';
 		}
@@ -435,8 +435,8 @@ if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
 	}
 }
 $sqlHewan.=' LIMIT '.$mulai.','.$halaman;
-
 // pr($sqlHewan);
+
 $exeHewan = mysqli_query($con,$sqlHewan);
 $numHewan = mysqli_num_rows($exeHewan);
 
@@ -781,9 +781,14 @@ if(isset($_GET['art'])){
 	<script src="./assets/plugins/ion-rangeSlider/js/ion-rangeSlider/ion.rangeSlider.js" type="text/javascript"></script>
 
 	<script>
-			function mainFilter() {
-				$('#filteringForm').submit();
-			}
+		$(document).ready(function(){
+			$('#toggleFilt').focus();
+		});
+
+		function mainFilter() {
+			$('#filteringForm').submit();
+			$('#kategoriFilt').focus();
+		}
 
 			// $(document).ready(function(){
 			// 	function searchFilter(page_num) {
