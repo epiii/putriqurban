@@ -389,10 +389,8 @@ for ($i=1; $i<=$pages ; $i++){
 					// '.$hal.'
 					// <li><a href="./?halaman='.$nex.$pgt.'">next </a></li>
 
-// display filtering
-// while ($isi = mysqli_fetch_array($query)){
 
-// vd(empty(trim($_GET['lunas'],' ')));
+// display filtering
 $sqlHewan = 'SELECT * FROM hewan ';
 if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
 	$sqlHewan.=' WHERE ';
@@ -761,54 +759,28 @@ if(isset($_GET['art'])){
 	<script src="./assets/plugins/ion-rangeSlider/js/ion-rangeSlider/ion.rangeSlider.js" type="text/javascript"></script>
 
 	<script>
-			function mainFilter() {
-				$('#filteringForm').submit();
-			}
+			// function mainFilter() {
+			// 	$('#filteringForm').submit();
+			// }
 
-			$(document).ready(function(){
-			// main filter process : AJAX
-			// main filter process : AJAX
-				function searchFilter(page_num) {
-					page_num = page_num?page_num:0;
-					var keywords = $('#keywords').val();
-					var sortBy = $('#sortBy').val();
-					$.ajax({
-							type: 'POST',
-							url: 'getData.php',
-							data:'page='+page_num+'&keywords='+keywords+'&sortBy='+sortBy,
-							// beforeSend: function () {
-							// 		$('.loading-overlay').show();
-							// },
-							success: function (html) {
-									$('#posts_content').html(html);
-									$('.loading-overlay').fadeOut("slow");
-							}
-					});
-				}
-
-			// slider
-				// var beratSlider = document.getElementById('beratFilt');
-				// var hargaSlider = document.getElementById('hargaFilt');
-				//
-				// noUiSlider.create(hargaSlider, {
-				// 	// start: [ 20, 60 ],
-				// 	start: [ <?php echo $rSlider['minHarga'].','.$rSlider['maxHarga']; ?>],
-				// 	connect: true,
-				// 	range: {
-				// 		min:  0,
-				// 		max:  100
-				// 	}
-				// });
-				// noUiSlider.create(beratSlider, {
-				// 	// start: [ 20, 60 ],
-				// 	start: [ <?php echo $rBerat['minBerat'].','.$rBerat['maxBerat']; ?>],
-				// 	connect: true,
-				// 	range: {
-				// 		min:  0,
-				// 		max:  100
-				// 	}
-				// });
-			// end of : slider
+			// $(document).ready(function(){
+			// 	function searchFilter(page_num) {
+			// 		page_num = page_num?page_num:0;
+			// 		var keywords = $('#keywords').val();
+			// 		var sortBy = $('#sortBy').val();
+			// 		$.ajax({
+			// 				type: 'POST',
+			// 				url: 'getData.php',
+			// 				data:'page='+page_num+'&keywords='+keywords+'&sortBy='+sortBy,
+			// 				// beforeSend: function () {
+			// 				// 		$('.loading-overlay').show();
+			// 				// },
+			// 				success: function (html) {
+			// 						$('#posts_content').html(html);
+			// 						$('.loading-overlay').fadeOut("slow");
+			// 				}
+			// 		});
+			// 	}
 
 			// toggle filtering switch
 				$('#toggleFilt').on('change',function(){
@@ -824,14 +796,9 @@ if(isset($_GET['art'])){
 			    grid: true,
 					from:<?php echo $currentMinHarga; ?>,
 					to:<?php echo $currentMaxHarga; ?>,
-					// from:0,
-					// to:6,
 					prefix:'Rp.',
-					// sufix:'k'
-					// step : 100
 					values: <?php echo json_encode($hargaArr); ?>
 				});
-				// values: [0, 250000, 500000, 1000000, 2500000, 5000000, 10000000]
 
 				$("#beratFilt").ionRangeSlider({
 					type: "double",
@@ -840,12 +807,7 @@ if(isset($_GET['art'])){
 					to:<?php echo $currentMaxBerat; ?>,
 					prefix:'kg.',
 					values: <?php echo json_encode($beratArr); ?>
-					// from:0,
-					// to:6,
-					// sufix:'k'
-					// step : 100
 				});
-
 			});
 	</script>
 
