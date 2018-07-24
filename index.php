@@ -395,6 +395,8 @@ for ($i=1; $i<=$pages ; $i++){
 // vd(empty(trim($_GET['lunas'],' ')));
 $sqlHewan = 'SELECT * FROM hewan ';
 if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
+
+// filtering
 	$sqlHewan.=' WHERE ';
 	if(isset($_GET['kategori']) && trim($_GET['kategori'],' ')!=''){
 		$sqlHewan.=' kategori ="'.strtoupper(trim($_GET['kategori'],' ')).'" AND ';
@@ -414,10 +416,26 @@ if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
 		$hrg=explode(';',$hrg);
 		$sqlHewan.='   berat between '.$hrg[0].' and '.$hrg[1];
 	}
+
+// sorting
+	$sqlHewan.=' ORDER BY ';
+	if(isset($_GET['sorting']) && trim($_GET['sorting'],' ')!='' ){
+		if ($_GET['sorting']=='minHarga'){
+			$sqlHewan.=' harga_lama ASC ';
+		}
+		if ($_GET['sorting']=='maxHarga'){
+			$sqlHewan.=' harga_lama DESC ';
+		}
+		if ($_GET['sorting']=='minBerat'){
+			$sqlHewan.=' berat ASC';
+		}
+		if ($_GET['sorting']=='maxBerat'){
+			$sqlHewan.=' berat DESC ';
+		}
+	}
 }
-// $sqlHewan.=isset($_GET['berat'])&& trim($_GET['berat'],' ')!=''?'WHERE berat="'.trim($_GET['berat'],' ').'" ':'';
-$sqlHewan.=' ORDER BY tgl_masuk DESC ';
 $sqlHewan.=' LIMIT '.$mulai.','.$halaman;
+
 // pr($sqlHewan);
 $exeHewan = mysqli_query($con,$sqlHewan);
 $numHewan = mysqli_num_rows($exeHewan);

@@ -40,10 +40,11 @@
 
           <!-- filtering form -->
             <form id="filteringForm"  onsubmit="mainFilter();" action="index.php?" method="get">
+
+              <input type="hidden" name="mode" value="filtering">
+
               <div class="form-group">
-                <input type="hidden" name="mode" value="filtering">
                 <label>Kategori</label>
-                <!-- <select id="kategoriFilt" onchange="alert(this.value);" class="form-control" name=""> -->
                 <select id="kategoriFilt" xonchange="mainFilter();" class="form-control" name="kategori">
                   <option value="">Semua</option>
                   <option <?php echo isset($_GET['kategori']) && $_GET['kategori']=='DG'?'selected':''; ?> value="DG">Domba Gemuk</option>
@@ -51,6 +52,7 @@
                   <option <?php echo isset($_GET['kategori']) && $_GET['kategori']=='K'?'selected':''; ?> value="K">Kambing</option>
                 </select>
               </div>
+
 
               <div class="form-group">
                 <label>Status</label>
@@ -87,6 +89,17 @@
                 <label>Harga</label>
                 <div id="hargaFilt" name="harga" class="slider slider-info"></div>
               </div> -->
+              <div class="form-group">
+                <label>Sort</label>
+                <select id="sortFilt" xonchange="mainFilter();" class="form-control" name="sorting">
+                  <option value="">Semua</option>
+                  <option <?php echo isset($_GET['sorting']) && $_GET['sorting']=='minHarga'?'selected':''; ?> value="minHarga">Termurah</option>
+                  <option <?php echo isset($_GET['sorting']) && $_GET['sorting']=='maxHarga'?'selected':''; ?> value="maxHarga">Termahal</option>
+                  <option <?php echo isset($_GET['sorting']) && $_GET['sorting']=='minBerat'?'selected':''; ?> value="minBerat">Bobot Terringan</option>
+                  <option <?php echo isset($_GET['sorting']) && $_GET['sorting']=='maxBerat'?'selected':''; ?> value="maxBerat">Bobot Terberat</option>
+                </select>
+              </div>
+
               <input class="btn btn-info" type="submit" name="" value="OK">
             </form> <!-- end of : filtering form -->
 
