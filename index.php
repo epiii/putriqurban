@@ -389,8 +389,10 @@ for ($i=1; $i<=$pages ; $i++){
 					// '.$hal.'
 					// <li><a href="./?halaman='.$nex.$pgt.'">next </a></li>
 
-
 // display filtering
+// while ($isi = mysqli_fetch_array($query)){
+
+// vd(empty(trim($_GET['lunas'],' ')));
 $sqlHewan = 'SELECT * FROM hewan ';
 if(isset($_GET['mode']) && $_GET['mode']=='filtering'){
 	$sqlHewan.=' WHERE ';
@@ -759,9 +761,9 @@ if(isset($_GET['art'])){
 	<script src="./assets/plugins/ion-rangeSlider/js/ion-rangeSlider/ion.rangeSlider.js" type="text/javascript"></script>
 
 	<script>
-			// function mainFilter() {
-			// 	$('#filteringForm').submit();
-			// }
+			function mainFilter() {
+				$('#filteringForm').submit();
+			}
 
 			// $(document).ready(function(){
 			// 	function searchFilter(page_num) {
@@ -808,7 +810,7 @@ if(isset($_GET['art'])){
 					prefix:'kg.',
 					values: <?php echo json_encode($beratArr); ?>
 				});
-			});
+			// });
 	</script>
 
 </html>
