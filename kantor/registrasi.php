@@ -186,7 +186,6 @@
 								alert(dt.msg);
 								if(dt.status==true){
 									resetform();
-									// $(location).href('./');
 									location.href='./';
 								}
 							}

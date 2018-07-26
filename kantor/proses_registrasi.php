@@ -21,7 +21,6 @@
 		$kupon		= getNewCoupon($akses);
 		$referal	= $_POST['referal'];
 		// -----
-
 		$s = 'INSERT INTO akses SET
 						username = "'.$username.'",
 						password = "'.$password['password'].'",
