@@ -126,7 +126,7 @@
 
 									<div class="form-group">
 										<label>Jenis Pemasaran</label>
-										<select name="akses" id="akses" class="form-control">
+										<select required name="akses" id="akses" class="form-control">
 											<option value="">- Pilih Jenis Pemasaran-</option>
 											<option value="reseller">Reseller</option>
 											<option value="marketing">Marketing</option>
