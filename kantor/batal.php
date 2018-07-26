@@ -13,14 +13,14 @@
 		$idh = $_POST['ubah']; 
 		$pml = $_POST['pml'];
 		$almt = $_POST['alm'];
-		mysql_query("UPDATE `$db`.`hewan` SET `pemilik` = '$pml', `alamat` = '$almt' WHERE `hewan`.`id_hwn` = '$idh';");
+		mysqli_query($con,"UPDATE `$db`.`hewan` SET `pemilik` = '$pml', `alamat` = '$almt' WHERE `hewan`.`id_hwn` = '$idh';");
 	}
 		//aksi batal
 	if(isset($_POST['batal'])){
 		$idh = $_POST['batal']; 
 		$pml = $_POST['pml'];
 		$almt = $_POST['alm'];
-		mysql_query("UPDATE `$db`.`hewan` SET `pemilik` = NULL, `alamat` = NULL, `lunas`= NULL WHERE `hewan`.`id_hwn` = '$idh';");
+		mysqli_query($con,"UPDATE `$db`.`hewan` SET `pemilik` = NULL, `alamat` = NULL, `lunas`= NULL WHERE `hewan`.`id_hwn` = '$idh';");
 	}
 	
 	//query cari
@@ -28,8 +28,8 @@
 	if(isset($_GET['lihat'])){
 		$order = $_GET['lihat'];
 		//klo ada di db
-		$qc = mysql_query("SELECT * FROM `$db`.`hewan` WHERE `id_hwn` = '$order' AND `lunas` IS NOT NULL");
-		$dc = mysql_fetch_array($qc);
+		$qc = mysqli_query($con,"SELECT * FROM `$db`.`hewan` WHERE `id_hwn` = '$order' AND `lunas` IS NOT NULL");
+		$dc = mysqli_fetch_array($qc);
 		$tbd ='';
 		if(is_null($dc['dealer_view'])){
 			$tb = ' disabled ';

@@ -1,9 +1,9 @@
 <?php
 $sesi1 = $_SESSION["nama"];$nmus = $_SESSION["nama"];
 function catat($status,$nmus,$db){
-	 $qcat1 = mysql_query("SELECT * FROM `$db`.`rec_akses` WHERE `wkt` = CURRENT_DATE() AND `nama` = '$nmus'");
-	$liatc1 = mysql_fetch_array($qcat1);
-	$cekr =mysql_num_rows($qcat1);
+	 $qcat1 = mysqli_query($con,"SELECT * FROM `$db`.`rec_akses` WHERE `wkt` = CURRENT_DATE() AND `nama` = '$nmus'");
+	$liatc1 = mysqli_fetch_array($qcat1);
+	$cekr =mysqli_num_rows($qcat1);
 	$tawar =0; $keep=0; $lunas=0;
 	if($status == "tawar"){
 		$vale = $liatc1['tawar']+1;
@@ -21,16 +21,16 @@ function catat($status,$nmus,$db){
 	
 	if($cekr != 0){
 		$ken = $liatc1[$ubh]+1;
-		mysql_query("UPDATE `$db`.`rec_akses` SET `$ubh` = '$vale' WHERE `rec_akses`.`wkt` = CURRENT_DATE() AND `rec_akses`.`nama`='$nmus'");
+		mysqli_query($con,"UPDATE `$db`.`rec_akses` SET `$ubh` = '$vale' WHERE `rec_akses`.`wkt` = CURRENT_DATE() AND `rec_akses`.`nama`='$nmus'");
 	}else{
-		mysql_query("INSERT INTO `qurban`.`rec_akses` (`no`, `wkt`, `nama`, `tawar`, `keep`, `lunas`) VALUES (NULL, NOW(), '$nmus', '$tawar', '$keep', '$lunas')");
+		mysqli_query($con,"INSERT INTO `qurban`.`rec_akses` (`no`, `wkt`, `nama`, `tawar`, `keep`, `lunas`) VALUES (NULL, NOW(), '$nmus', '$tawar', '$keep', '$lunas')");
 	}
-	echo mysql_error();
+	echo mysqli_error();
 }
 function liat($hwn, $sesi1,$db)
 {
-    $q1         = mysql_query("SELECT `updated`,`showroom_view`,`lunas`,`pemilik`,`alamat`,`tgl_sold`,`no`,`foto`,NOW() as `wkt` FROM `qurban`.`hewan` where `id_hwn`='$hwn'");
-    $liat       = mysql_fetch_array($q1);
+    $q1         = mysqli_query($con,"SELECT `updated`,`showroom_view`,`lunas`,`pemilik`,`alamat`,`tgl_sold`,`no`,`foto`,NOW() as `wkt` FROM `qurban`.`hewan` where `id_hwn`='$hwn'");
+    $liat       = mysqli_fetch_array($q1);
     $format     = "Y-m-d H:i:s A";
     
 	$dpt['asli'] = $liat['showroom_view'];
@@ -39,9 +39,9 @@ function liat($hwn, $sesi1,$db)
 if($liat['no']){
     if ($difference < 1) {
         if (is_null($liat['lunas'])) {
-            mysql_query("UPDATE `qurban`.`hewan` SET `updated` = DATE_ADD(now(), INTERVAL 5 MINUTE) WHERE `hewan`.`id_hwn` = '$hwn'");
+            mysqli_query($con,"UPDATE `qurban`.`hewan` SET `updated` = DATE_ADD(now(), INTERVAL 5 MINUTE) WHERE `hewan`.`id_hwn` = '$hwn'");
             $dpt['dtk'] = 300;
-            mysql_query("UPDATE `qurban`.`hewan` SET `showroom_view` = '$sesi1' WHERE `hewan`.`id_hwn` = '$hwn'");
+            mysqli_query($con,"UPDATE `qurban`.`hewan` SET `showroom_view` = '$sesi1' WHERE `hewan`.`id_hwn` = '$hwn'");
             $dpt['lunas'] = "kacau";
 	//catat akses
 	catat("tawar",$_SESSION["nama"],$db);
@@ -66,12 +66,12 @@ if($liat['no']){
 }
 if (isset($_POST['pelunasan'])) {
     $kdl = $_POST['pelunasan'];
-    mysql_query("UPDATE `qurban`.`hewan` SET `lunas` = 'lunas' WHERE `hewan`.`id_hwn` = '$kdl'");
+    mysqli_query($con,"UPDATE `qurban`.`hewan` SET `lunas` = 'lunas' WHERE `hewan`.`id_hwn` = '$kdl'");
    catat("lunas",$nmus,$db);
 }
 if (isset($_GET['batal'])) {
     $kdb = $_GET['batal'];
-    mysql_query("UPDATE `qurban`.`hewan` SET `updated` = now() WHERE `hewan`.`id_hwn` = '$kdb'");
+    mysqli_query($con,"UPDATE `qurban`.`hewan` SET `updated` = now() WHERE `hewan`.`id_hwn` = '$kdb'");
     
 }
 $dte  = strtotime(date('Y/m/d H:i')) + 60 * 60;
@@ -83,7 +83,7 @@ if (isset($_POST['keep'])) {
     $idny = $_POST['keep'];
 	$fo = $_POST['foto'];
 	catat("keep",$nmus,$db);
-    mysql_query("UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'keep', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
+    mysqli_query($con,"UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'keep', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
     $info = '<div class="col-lg-4">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
@@ -110,7 +110,7 @@ if (isset($_POST['lunas'])) {
     $idny = $_POST['lunas'];
 	$fo = $_POST['foto'];
 	catat("lunas",$nmus,$db);
-    mysql_query("UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'lunas', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
+    mysqli_query($con,"UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'lunas', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
     $info = '<div class="col-lg-4">
                     <div class="panel panel-green">
                         <div class="panel-heading">

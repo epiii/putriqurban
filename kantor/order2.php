@@ -1,16 +1,16 @@
 <?php 
 $sesi1 = 'merao';
 function liat($hwn,$sesi1) {   
-	$q1 = mysql_query("SELECT `updated`,`showroom_view`,`lunas`,`pemilik`,`alamat`,`tgl_sold` FROM `qurban`.`hewan` where `id_hwn`='$hwn'");
-	$liat = mysql_fetch_array($q1);
+	$q1 = mysqli_query($con,"SELECT `updated`,`showroom_view`,`lunas`,`pemilik`,`alamat`,`tgl_sold` FROM `qurban`.`hewan` where `id_hwn`='$hwn'");
+	$liat = mysqli_fetch_array($q1);
 	$format = "Y-m-d H:i:s";
 	$timestamp = strtotime($liat['updated']);
     $difference = $timestamp - $_SERVER['REQUEST_TIME'];
     if($difference < 0){
 		if(is_null($liat['lunas'])){
-			mysql_query("UPDATE `qurban`.`hewan` SET `updated` = DATE_ADD(now(), INTERVAL 5 MINUTE) WHERE `hewan`.`id_hwn` = '$hwn'"); 
+			mysqli_query($con,"UPDATE `qurban`.`hewan` SET `updated` = DATE_ADD(now(), INTERVAL 5 MINUTE) WHERE `hewan`.`id_hwn` = '$hwn'"); 
 			$dpt['dtk'] =300;
-			mysql_query("UPDATE `qurban`.`hewan` SET `showroom_view` = '$sesi1' WHERE `hewan`.`id_hwn` = '$hwn'");
+			mysqli_query($con,"UPDATE `qurban`.`hewan` SET `showroom_view` = '$sesi1' WHERE `hewan`.`id_hwn` = '$hwn'");
 			$dpt['lunas'] = 0;
 		}else{
 			$dpt['lunas'] =$liat['lunas'];
@@ -28,12 +28,12 @@ function liat($hwn,$sesi1) {
 }
 if(isset($_POST['pelunasan'])){
 	$kdl = $_POST['pelunasan']; 
-		mysql_query("UPDATE `qurban`.`hewan` SET `lunas` = 'lunas' WHERE `hewan`.`id_hwn` = '$kdl'"); 
+		mysqli_query($con,"UPDATE `qurban`.`hewan` SET `lunas` = 'lunas' WHERE `hewan`.`id_hwn` = '$kdl'"); 
 		
 }
 if(isset($_GET['batal'])){
 	$kdb = $_GET['batal']; 
-		mysql_query("UPDATE `qurban`.`hewan` SET `updated` = now() WHERE `hewan`.`id_hwn` = '$kdb'"); 
+		mysqli_query($con,"UPDATE `qurban`.`hewan` SET `updated` = now() WHERE `hewan`.`id_hwn` = '$kdb'"); 
 		
 }
 $dte = strtotime(date('Y/m/d H:i')) + 60 * 60;
@@ -41,7 +41,7 @@ $dts = date('d/m/Y H:i', $dte);
 $info = "";
 if(isset($_POST['keep'])){
 	$nma = $_POST['pemilik']; $alm = $_POST['alamat']; $idny = $_POST['keep'];
-	mysql_query("UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'keep', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
+	mysqli_query($con,"UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'keep', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
 	$info = '<div class="col-lg-4">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
@@ -63,7 +63,7 @@ if(isset($_POST['keep'])){
 }
 if(isset($_POST['lunas'])){
 	$nma = $_POST['pemilik']; $alm = $_POST['alamat']; $idny = $_POST['lunas'];
-	mysql_query("UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'lunas', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
+	mysqli_query($con,"UPDATE `qurban`.`hewan` SET `pemilik` = '$nma', `alamat` = '$alm', `lunas` = 'lunas', `tgl_sold` = now() WHERE `hewan`.`id_hwn` = '$idny'");
 	$info = '<div class="col-lg-4">
                     <div class="panel panel-green">
                         <div class="panel-heading">

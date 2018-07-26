@@ -1,23 +1,27 @@
-<?php 
+<?php
 session_start();
 include 'koneksi.php';
 if(isset($_POST['cek'])){
 	$nm_u = $_POST['user'];
 
-	$q_det = mysql_query(" SELECT * FROM `$db`.`akses` WHERE `username` = '$nm_u'");
-	$det = mysql_fetch_array($q_det);
+	$q_det = mysqli_query($con,"select * FROM akses WHERE username = '$nm_u'");
+	$det = mysqli_fetch_array($q_det);
 	$nm_agen = $det['nama'];
 	$saltny = $det['salt'];
 	$pass_db = $det['password'];
+	//echo $nm_agen." ".$saltny." ".$pass_db;
 }
 
 
 if(isset($_POST['sand'])){
 	$sandi = $_POST['sand'];
-	
+	//echo $sandi;
+
 	if($pass_db ==''){
-		$escapedName = mysql_real_escape_string($nm_agen); 
-		$escapedPW = mysql_real_escape_string($sandi);
+
+		$escapedName = mysqli_real_escape_string($nm_agen);
+		$escapedPW = mysqli_real_escape_string($sandi);
+		//echo $escapedName." ".$escapedPW." db tidak ada";
 
 		# generate a random salt to use for this account
 		$salt = bin2hex(mcrypt_create_iv(32, MCRYPT_DEV_URANDOM));
@@ -25,36 +29,65 @@ if(isset($_POST['sand'])){
 		$saltedPW =  $escapedPW . $salt;
 
 		$hashedPW = hash('sha256', $saltedPW);
+		//echo $saltedPW." ".$hashedPW." yg db kosong";
 
-	mysql_query("UPDATE `$db`.`akses` SET `salt`='$salt', `password`='$hashedPW' WHERE `username`='$nm_u'");
+	mysqli_query($con,"UPDATE akses SET salt='$salt', password='$hashedPW' WHERE username='$nm_u'");
 	$_SESSION["otoritas"] = $hashedPW;
 	header('location: ./login.php?error=3');
-	
-		
+
+	//echo "pass db kosong";
+
 	}else{
-		$escapedName = mysql_real_escape_string($nm_agen); 
-		$escapedPW = mysql_real_escape_string($sandi);
+
+		$escapedName = mysqli_real_escape_string($con, $nm_agen);
+		$escapedPW = mysqli_real_escape_string($con, $sandi);
+
+		/*
+		echo $escapedName." ".$escapedPW." db ada <br>";
+		if (isset($escapedPW)){
+			echo "escapePw ada db ada";
+		} else {
+			echo "escapePw tidak ada db ada";
+		}
+		*/
 
 		# generate a random salt to use for this account
+
 		$salt = $saltny;
 
 		$saltedPW =  $escapedPW . $salt;
 
 		$hashedPW = hash('sha256', $saltedPW);
 
+		//echo $salt." yuan ".$saltedPW." yuan ".$hashedPW." yang db ada";
+
+		//echo $hashedPW."<br>";
+		//echo $pass_db;
+
 		if($hashedPW == $pass_db){
-		
+		//echo "ya sama";
+
 		$_SESSION["otoritas"] = $hashedPW;
 		header('location: ./');
-		
+
 		//print_r($_SESSION['otoritas']);
-		
+
 		}else{
+			//echo "tidak sama";
 		header('location:location: ./login.php?error=2');
 		//	echo $pass_db.' <-pass ';
 		}
+
+
+		//echo "pass db tidak kosong";
 	}
+
 }
+/*
+else {
+	echo "tidak ada sandi";
+}
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -63,7 +96,7 @@ if(isset($_POST['sand'])){
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+
     <link rel="apple-touch-icon" sizes="76x76" href="https://showroomqurban.com/favicon-i.png">
 	<link rel="icon" type="image/png" href="https://showroomqurban.com/favicon.png">
 
@@ -89,7 +122,7 @@ if(isset($_POST['sand'])){
 	<meta property="og:image:height" content="200"/>
 	<meta property="og:site_name" content="Showroom Qurban"/>
 	<meta property="article:author" content="142246279698643" itemprop="author"/>
-	
+
 	<meta name="twitter:card" content="summary_large_image">
 	<meta name="twitter:site" content="@showroom.qur">
 	<meta name="twitter:title" content="Hewan Qurban adalah Kendaraan Akherat">
@@ -104,7 +137,7 @@ if(isset($_POST['sand'])){
 	<link href="./dist/css/sb-admin-2.css" rel="stylesheet">
 	<link href="./vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    
+
 </head>
 
 <body>
@@ -145,6 +178,7 @@ if(isset($_POST['sand'])){
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="sand" type="password" value="">
                                 </div>
+								<p>ingin bergabung dengan kami siahkan klik <a href="registrasi.php">Klik Di sini</a></p>
                                 <button type="submit" class="btn btn-info pull-right" id="ktk2"  name="cek" >Buktikan!</button>
                             </fieldset>
                         </form>

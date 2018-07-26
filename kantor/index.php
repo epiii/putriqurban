@@ -155,8 +155,8 @@ include 'statistik.php';
 	//jika marketing
 	if($aktif_user == 'marketing'){
 	
-	$qdat = mysql_query("SELECT `pemilik`,`alamat`,`lunas`,`harga_baru`,`id_hwn`,`dealer_view`,`kategori` FROM `$db`.`hewan` where `showroom_view` = '$nm_us'");
-	while ($dat = mysql_fetch_array($qdat)){
+	$qdat = mysqli_query($con,"SELECT `pemilik`,`alamat`,`lunas`,`harga_baru`,`id_hwn`,`dealer_view`,`kategori` FROM `$db`.`hewan` where `showroom_view` = '$nm_us'");
+	while ($dat = mysqli_fetch_array($qdat)){
 		//jika lunas, hitung
 		if($dat['lunas'] == 'lunas'){
 			$lunas++;
@@ -174,9 +174,9 @@ include 'statistik.php';
 	}
 	$total = $keep+$lunas;
 	}else if($aktif_user == 'admin'){
-		$qdat7 = mysql_query("SELECT `pemilik`,`alamat`,`lunas`,`harga_lama`,`showroom_view`,`kategori`,`id_hwn` FROM `$db`.`hewan` where `lunas` IS NOT NULL");
+		$qdat7 = mysqli_query($con,"SELECT `pemilik`,`alamat`,`lunas`,`harga_lama`,`showroom_view`,`kategori`,`id_hwn` FROM `$db`.`hewan` where `lunas` IS NOT NULL");
 	$rp_ln =0; $rp_kp =0;	
-	while ($dat7 = mysql_fetch_array($qdat7)){
+	while ($dat7 = mysqli_fetch_array($qdat7)){
 		//jika lunas, hitung
 		if($dat7['lunas'] == 'lunas'){
 			$lunas++;

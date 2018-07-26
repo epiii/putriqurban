@@ -11,8 +11,8 @@
 <?php
 $sesi1 = 'merem2';
 $hwn =276;
-    $q1         = mysql_query("SELECT `updated`,`showroom_view`,`lunas`,`pemilik`,`alamat`,`tgl_sold`,`no`,NOW() as `wkt` FROM `qurban`.`hewan` where `id_hwn`='$hwn'");
-    $liat       = mysql_fetch_array($q1);
+    $q1         = mysqli_query($con,"SELECT `updated`,`showroom_view`,`lunas`,`pemilik`,`alamat`,`tgl_sold`,`no`,NOW() as `wkt` FROM `qurban`.`hewan` where `id_hwn`='$hwn'");
+    $liat       = mysqli_fetch_array($q1);
     $format     = "Y-m-d H:i:s A";
     
 	

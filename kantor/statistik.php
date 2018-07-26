@@ -1,8 +1,8 @@
 <?php 
 $nm_us4 = $_SESSION['nama'];
-$qtab =mysql_query("SELECT * FROM `$db`.`hewan` WHERE `showroom_view` = '$nm_us4' ORDER BY `hewan`.`lunas` ASC");
+$qtab =mysqli_query($con,"SELECT * FROM `$db`.`hewan` WHERE `showroom_view` = '$nm_us4' ORDER BY `hewan`.`lunas` ASC");
 $tabel ='';
-while ($dttab = mysql_fetch_array($qtab)){
+while ($dttab = mysqli_fetch_array($qtab)){
 	if($dttab['lunas'] == "keep"){
 		if(is_null($dttab['dealer_view']) OR empty($dttab['dealer_view'])){
 	$klas = 'warning';
@@ -31,8 +31,8 @@ while ($dttab = mysql_fetch_array($qtab)){
 }
 //lihat available
 $avail ='';
-$qav = mysql_query("SELECT * FROM `$db`.`hewan` WHERE `hewan`.`lunas` IS NULL ");
-while($dav = mysql_fetch_array($qav)){
+$qav = mysqli_query($con,"SELECT * FROM `$db`.`hewan` WHERE `hewan`.`lunas` IS NULL ");
+while($dav = mysqli_fetch_array($qav)){
 $avb='
 <tr>
                                         <td>'.$dav['kategori'].'</td>

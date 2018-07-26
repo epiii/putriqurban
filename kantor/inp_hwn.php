@@ -62,16 +62,16 @@ if (isset($_POST['rp'])){
 	$kat = $_POST['kat']; $id = $_POST['id']; 
 	$ket = $_POST['ket'];
 	if($rp != ''){
-		mysql_query("INSERT INTO `$db`.`hewan` (`no`, `id_hwn`, `tgl_masuk`, `foto`, `pemilik`, `alamat`, `lunas`, `updated`, `showroom_view`, `dealer_view`, `berat`, `kategori`, `kelamin`, `tgl_sold`, `harga_baru`, `harga_lama`) VALUES (NULL, '$id', now(), '$url', NULL, NULL, NULL, NULL, NULL, NULL, '$ket', '$kat', 'LK', NULL, NULL, '$rp');");
-		echo mysql_error();
+		mysqli_query($con,"INSERT INTO `$db`.`hewan` (`no`, `id_hwn`, `tgl_masuk`, `foto`, `pemilik`, `alamat`, `lunas`, `updated`, `showroom_view`, `dealer_view`, `berat`, `kategori`, `kelamin`, `tgl_sold`, `harga_baru`, `harga_lama`) VALUES (NULL, '$id', now(), '$url', NULL, NULL, NULL, NULL, NULL, NULL, '$ket', '$kat', 'LK', NULL, NULL, '$rp');");
+		echo mysqli_error();
 	}
-echo mysql_error();
+echo mysqli_error();
 	}	
 if(isset($_POST['bulk'])){
 	$gbrbu = $_POST['gbr']; $nohwn = $_POST['kode'];
 	$dt_gbu = explode(',',$gbrbu);
 	foreach ($dt_gbu as $gbbu) {
-		mysql_query("INSERT INTO `$db`.`datil_hewan` (`no`, `id_hwn`, `foto`, `deskripsi`, `berat`, `tgl`) VALUES (NULL, '$nohwn', '$gbbu', 'no', '10', now())");
+		mysqli_query($con,"INSERT INTO `$db`.`datil_hewan` (`no`, `id_hwn`, `foto`, `deskripsi`, `berat`, `tgl`) VALUES (NULL, '$nohwn', '$gbbu', 'no', '10', now())");
 	}
 }	
 ?>	

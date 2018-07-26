@@ -785,6 +785,7 @@ if(isset($_GET['art'])){
 			$('#toggleFilt').focus();
 		});
 
+		
 		function mainFilter() {
 			$('#filteringForm').submit();
 			$('#kategoriFilt').focus();
