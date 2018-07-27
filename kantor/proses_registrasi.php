@@ -4,7 +4,7 @@
 
 	$username 	= filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
 	// vd($username);
-	if (!isset($username) && $username=='') {
+	if (!isset($username) || $username=='') {
 		$ret = [
 			'status'=>false,
 			'msg'=>'invalid request'

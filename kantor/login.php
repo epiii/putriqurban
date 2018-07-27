@@ -12,7 +12,6 @@ if(isset($_POST['cek'])){
 	//echo $nm_agen." ".$saltny." ".$pass_db;
 }
 
-
 if(isset($_POST['sand'])){
 	$sandi = $_POST['sand'];
 	//echo $sandi;
@@ -31,12 +30,10 @@ if(isset($_POST['sand'])){
 		$hashedPW = hash('sha256', $saltedPW);
 		//echo $saltedPW." ".$hashedPW." yg db kosong";
 
-	mysqli_query($con,"UPDATE akses SET salt='$salt', password='$hashedPW' WHERE username='$nm_u'");
-	$_SESSION["otoritas"] = $hashedPW;
-	header('location: ./login.php?error=3');
-
-	//echo "pass db kosong";
-
+		mysqli_query($con,"UPDATE akses SET salt='$salt', password='$hashedPW' WHERE username='$nm_u'");
+		$_SESSION["otoritas"] = $hashedPW;
+		header('location: ./login.php?error=3');
+		//echo "pass db kosong";
 	}else{
 
 		$escapedName = mysqli_real_escape_string($con, $nm_agen);
@@ -65,23 +62,17 @@ if(isset($_POST['sand'])){
 		//echo $pass_db;
 
 		if($hashedPW == $pass_db){
-		//echo "ya sama";
-
-		$_SESSION["otoritas"] = $hashedPW;
-		header('location: ./');
-
-		//print_r($_SESSION['otoritas']);
-
+			//echo "ya sama";
+			$_SESSION["otoritas"] = $hashedPW;
+			header('location: ./');
+			//print_r($_SESSION['otoritas']);
 		}else{
 			//echo "tidak sama";
-		header('location:location: ./login.php?error=2');
-		//	echo $pass_db.' <-pass ';
+			header('location:location: ./login.php?error=2');
+			//	echo $pass_db.' <-pass ';
 		}
-
-
 		//echo "pass db tidak kosong";
 	}
-
 }
 /*
 else {

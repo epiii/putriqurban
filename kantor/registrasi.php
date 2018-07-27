@@ -142,7 +142,7 @@
 											$e = mysqli_query($con,$s);
 										 ?>
 
-										<select required name="referal" id="referal" class="form-control">
+										<select name="referal" id="referal" class="form-control">
 											<option value="">- Pilih Referal-</option>
 											<?php while($r=mysqli_fetch_assoc($e)){
 													echo '<option value="'.$r['referal'].'">'.$r['referal'].'</option>';
